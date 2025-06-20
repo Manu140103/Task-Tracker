@@ -12,7 +12,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
-        eprintln!("Por favor, especifique una acción: agr, act, eli, eestatus, lista");
+        eprintln!("Por favor, especifique una acción: agr, act, eli, estatus, lista");
         process::exit(1);
     }
 
@@ -54,7 +54,7 @@ fn main() {
         }
         "estatus" => {
             if args.len() < 4 {
-                eprintln!("Uso: estatus <id> <en_espera|en_progeso|listo>");
+                eprintln!("Uso: estatus <id> <en_espera|en_progreso|listo>");
                 process::exit(1);
             }
             let id: u32 = args[2].parse().unwrap_or_else(|_| {
@@ -69,7 +69,7 @@ fn main() {
             list_tasks(&tasks, filter);
         }
         _ => {
-            eprintln!("Acción desconocida, por favor use: agr, act, eli, eestatus, lista ");
+            eprintln!("Acción desconocida, por favor use: agr, act, eli, estatus, lista ");
             process::exit(1);
         }
     }
@@ -106,9 +106,9 @@ fn delete_task(tasks: &mut Vec<Task>, id: u32) {
 }
 
 fn change_status(tasks: &mut Vec<Task>, id: u32, status: &str) {
-    let valid_status = ["en_espera", "en_progeso", "listo"];
+    let valid_status = ["en_espera", "en_progreso", "listo"];
     if !valid_status.contains(&status) {
-        eprintln!("Estado inválido. Use: en_espera, en_progeso, listo");
+        eprintln!("Estado inválido. Use: en_espera, en_progreso, listo");
         return;
     }
 
@@ -126,11 +126,11 @@ fn change_status(tasks: &mut Vec<Task>, id: u32, status: &str) {
 fn list_tasks(tasks: &Vec<Task>, filter: &str) {
     let filtered_tasks: Vec<&Task> = match filter {
         "en_espera" => tasks.iter().filter(|t| t.status == "en_espera").collect(),
-        "en_progeso" => tasks.iter().filter(|t| t.status == "en_progeso").collect(),
+        "en_progeso" => tasks.iter().filter(|t| t.status == "en_progreso").collect(),
         "listo" => tasks.iter().filter(|t| t.status == "listo").collect(),
         "todo" => tasks.iter().collect(),
         _ => {
-            eprintln!("Filtro desconocido. Use: todo, en_espera, en_progeso, listo");
+            eprintln!("Filtro desconocido. Use: todo, en_espera, en_progreso, listo");
             return;
         }
     };
